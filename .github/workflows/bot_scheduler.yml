@@ -1,10 +1,10 @@
 name: "bot_scheduler"
 on:
   schedule:
-    - cron: '30 18 * * FRI'
+    - cron: '0 0 * * SUN'
 
 jobs:
-  bit_scheduler:
+  b0t_scheduler:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
           python3 -m pip install -r requirements.txt
       - name: top_10_cve_tags
         working-directory: ./
-        if: github.event.schedule == '30 18 * * FRI'
+        if: github.event.schedule == '0 0 * * SUN'
         env:
           GREYNOISE_API_KEY: ${{ secrets.GREYNOISE_API_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
