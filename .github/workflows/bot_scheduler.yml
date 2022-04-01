@@ -1,0 +1,28 @@
+name: "bot_scheduler"
+on:
+  schedule:
+    - cron: '30 18 * * FRI'
+
+jobs:
+  bit_scheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          cd $GITHUB_WORKSPACE
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+      - name: top_10_cve_tags
+        working-directory: ./
+        if: github.event.schedule == '30 18 * * FRI'
+        env:
+          GREYNOISE_API_KEY: ${{ secrets.GREYNOISE_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          python3 top_10_cve_tags.py
