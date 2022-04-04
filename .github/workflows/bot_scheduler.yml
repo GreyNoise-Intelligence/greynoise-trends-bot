@@ -1,7 +1,7 @@
 name: "bot_scheduler"
 on:
   schedule:
-    - cron: '0 0 * * SUN'
+    - cron: '0 0 * * MON'
 
 jobs:
   b0t_scheduler:
@@ -19,7 +19,7 @@ jobs:
           python3 -m pip install -r requirements.txt
       - name: top_10_cve_tags
         working-directory: ./
-        if: github.event.schedule == '0 0 * * SUN'
+        if: github.event.schedule == '0 0 * * MON'
         env:
           GREYNOISE_API_KEY: ${{ secrets.GREYNOISE_API_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
